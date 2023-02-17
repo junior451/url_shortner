@@ -1,7 +1,7 @@
-<%= form_with(model: shortner, local: true) do |form| %>
+<%= form_with(url: "/short_urls") do |form| %>
   <div>
     <%= form.label :url %>
-    <%= form.text_field :url %>
+    <%= form.text_field :url, :placeholder => "Enter a valid url" %>
   </div>
 
   <br/>

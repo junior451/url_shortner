@@ -7,6 +7,10 @@ class ShortUrlsController < ApplicationController
     @urlShortner = Shortner.new
   end
 
+  def get_original_url
+    redirect_to "https://www.facebook.com"
+  end
+
   def create
     slug = "DDFGG"
     @shortened = Shortner.new(shortner_params.merge({slug: slug}))

@@ -1,7 +1,8 @@
+<h1>Short URLS List</h1>
 <table>
   <% @urls.each do |url| %>
     <tr>
-      <td><%= url.slug %> </td>
+      <td><%= link_to "#{url.slug}", "/url/#{url.slug}" %></td>
     </tr>
   <% end %>  
 </table>
