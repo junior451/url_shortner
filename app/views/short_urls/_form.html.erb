@@ -1,0 +1,11 @@
+<%= form_with(model: shortner, local: true) do |form| %>
+  <div>
+    <%= form.label :url %>
+    <%= form.text_field :url %>
+  </div>
+
+  <br/>
+  <div class="actions">
+    <%= form.submit 'Create Short URL' %>
+  </div>
+<% end %>
