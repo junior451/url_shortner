@@ -46,12 +46,38 @@ RSpec.describe "ShortUrls", type: :request do
     end
 
     it "returns a successful response" do
-      post "/short_urls", params: { url: "www.example.com" }
+      post "/short_urls", params: { url: "https://www.example.com" }
 
       follow_redirect!
 
       expect(response.body).to include(Shortner.first.slug)
       expect(response).to have_http_status(:success)
+    end
+
+    context "invalid url" do
+
+      it "displays error message to the user" do
+        post "/short_urls", params: { url: "h//www.example.com" }
+
+        expect(response.body).to include("Url not valid")
+      end
+    end
+  end
+
+  describe "10 latest urls endpoint" do
+    before do
+      10.times do
+        create(:shortner, no_visits: Random.rand(7))
+      end
+    end
+
+    it "returns the latest 10 urls with the nimber of visits" do
+      get "/latest_urls"
+
+      latest_shortened_urls = Shortner.order(created_at: :asc).limit(10)
+
+      json_response = JSON.parse (response.body)
+      expect(json_response).to eq(JSON.parse(latest_shortened_urls.to_json(only: [:url, :no_visits])))
     end
   end
 

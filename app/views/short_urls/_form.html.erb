@@ -1,4 +1,6 @@
-<% p @urlShortner %>
+<% @shortened.errors.full_messages.each do |message| %>
+  <p><%= message %></p>
+<% end %>
 
 <%= form_with(url: "/short_urls") do |form| %>
   <div>

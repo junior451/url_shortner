@@ -6,7 +6,7 @@ class ShortUrlsController < ApplicationController
   end
 
   def new
-    @urlShortner = Shortner.new
+    @shortened = Shortner.new
   end
 
   def get_original_url
@@ -14,6 +14,12 @@ class ShortUrlsController < ApplicationController
     shortened.no_visits += 1
     shortened.save
     redirect_to shortened.url
+  end
+
+  def latest_urls_with_vists
+    latest_shortened_urls = Shortner.order(created_at: :asc).limit(10)
+
+    render json: latest_shortened_urls.to_json(only: [:url, :no_visits])
   end
 
   def create
